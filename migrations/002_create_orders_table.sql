@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS ecommerce.orders (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER REFERENCES ecommerce.users(id),
+  total NUMERIC(10,2) NOT NULL,
+  status VARCHAR(50) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

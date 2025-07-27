@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aws-db-test-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: aws-db-test
+  template:
+    metadata:
+      labels:
+        app: aws-db-test
+    spec:
+      containers:
+      - name: aws-db-test
+        image: muni26/aws-db-test:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: AWS_POSTGRE_HOST
+          valueFrom:
+            secretKeyRef:
+              name: aws-db-test-secrets
+              key: AWS_POSTGRE_HOST
+        - name: AWS_POSTGRE_PORT
+          valueFrom:
+            secretKeyRef:
+              name: aws-db-test-secrets
+              key: AWS_POSTGRE_PORT
+        - name: AWS_POSTGRE_USER
+          valueFrom:
+            secretKeyRef:
+              name: aws-db-test-secrets
+              key: AWS_POSTGRE_USER
+        - name: AWS_POSTGRE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: aws-db-test-secrets
+              key: AWS_POSTGRE_PASSWORD
+        - name: AWS_POSTGRE_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: aws-db-test-secrets
+              key: AWS_POSTGRE_DATABASE
+        - name: AWS_POSTGRE_SSL_REJECT_UNAUTHORIZED
+          valueFrom:
+            secretKeyRef:
+              name: aws-db-test-secrets
+              key: AWS_POSTGRE_SSL_REJECT_UNAUTHORIZED
